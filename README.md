@@ -12,6 +12,6 @@ Coding Test submission to @ Wipro digital by Sankar Lakkimsetti.
 Followed MVVM architecture.
 
 ## App screenshots:-
-![](AppScreenshots/LaunchScreen.png | width = 200) ![](AppScreenshots/MainScreen.png | width = 200)
+<img src = "https://github.com/sankar9490/WiproCodingTest/blob/master/AppScreenshots/LaunchScreen.png" width="200"/>    <img src = "https://github.com/sankar9490/WiproCodingTest/blob/master/AppScreenshots/MainScreen.png" width="200"/>
 
 
