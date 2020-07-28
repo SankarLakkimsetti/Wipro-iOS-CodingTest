@@ -20,6 +20,7 @@
 		3A52637724C927C60009D749 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52637624C927C60009D749 /* UIView+Extension.swift */; };
 		3A52638024C9338F0009D749 /* CommonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52637F24C9338F0009D749 /* CommonHelper.swift */; };
 		3A52638B24CA0F200009D749 /* UIWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52638A24CA0F1F0009D749 /* UIWindow+Extension.swift */; };
+		3ACFD29E24CFFAF4000CD9CB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACFD29D24CFFAF4000CD9CB /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		3A52637624C927C60009D749 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		3A52637F24C9338F0009D749 /* CommonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHelper.swift; sourceTree = "<group>"; };
 		3A52638A24CA0F1F0009D749 /* UIWindow+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extension.swift"; sourceTree = "<group>"; };
+		3ACFD29D24CFFAF4000CD9CB /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 		3A52636F24C920410009D749 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				3ACFD29C24CFFAAA000CD9CB /* Constants */,
 				3A52634E24C884820009D749 /* ServiceCalls */,
 				3A52637E24C933780009D749 /* Helper */,
 				3A52637524C927930009D749 /* Extensions */,
@@ -205,6 +208,14 @@
 				3A52635C24C8AAD20009D749 /* ViewModel */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		3ACFD29C24CFFAAA000CD9CB /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				3ACFD29D24CFFAF4000CD9CB /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,6 +353,7 @@
 				3A52638B24CA0F200009D749 /* UIWindow+Extension.swift in Sources */,
 				3A52636724C8AC3C0009D749 /* CanadaListCell.swift in Sources */,
 				3A52634B24C883520009D749 /* CanadaListViewController.swift in Sources */,
+				3ACFD29E24CFFAF4000CD9CB /* Constants.swift in Sources */,
 				3A52631A24C881E40009D749 /* AppDelegate.swift in Sources */,
 				3A52638024C9338F0009D749 /* CommonHelper.swift in Sources */,
 				3A52635024C884B90009D749 /* WebServiceManager.swift in Sources */,

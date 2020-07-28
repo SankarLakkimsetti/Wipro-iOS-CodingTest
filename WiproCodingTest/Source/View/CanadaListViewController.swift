@@ -9,31 +9,29 @@
 import UIKit
 
 class CanadaListViewController: UITableViewController {
-    
+    //cell reuse Identifier
     let cellIdentifier = "canadaCellId"
     var canadaInfoList = [Rows]()
     var canadaViewModel = CanadaViewModel()
-    
+    // MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupNavigationBar()
         self.setupCanadaListTableView()
         self.loadCanadaData()
     }
-    
     //MARK:- set up Navigation bar
     func setupNavigationBar() {
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Medium", size: (UIDevice.current.userInterfaceIdiom == .pad) ? 30 : 18)!,.foregroundColor: UIColor.white]
-        self.navigationController!.navigationBar.barTintColor = UIColor(red: 7/255, green: 71/255, blue: 89/255, alpha: 1)
+        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: helveticaNeueMedium, size: (UIDevice.current.userInterfaceIdiom == .pad) ? 30 : 18)!,.foregroundColor: UIColor.white]
+        self.navigationController!.navigationBar.barTintColor = appThemeColor()
+        self.title = "About Canada"
     }
-    
     //MARK:- set up UITableView
     func setupCanadaListTableView() {
         let refreshControl = UIRefreshControl()
         tableView.register(CanadaListCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-        tableView.separatorColor = UIColor(red: 7/255, green: 71/255, blue: 89/255, alpha: 1)
+        tableView.separatorColor = appThemeColor()
         tableView.backgroundColor = .white
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
@@ -41,8 +39,7 @@ class CanadaListViewController: UITableViewController {
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshTableData), for: .valueChanged)
     }
-    
-    //MARK:- Fetch Canada Data
+    //MARK:- Load Canada Data
     fileprivate func loadCanadaData(){
         canadaViewModel.fetchCanadaData()
         canadaViewModel.reloadDataCompletionBlock = { [weak self] in
@@ -53,7 +50,6 @@ class CanadaListViewController: UITableViewController {
             }
         }
     }
-    
     //MARK:- UITableView Delegate And Datasource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (canadaInfoList.count)
@@ -64,7 +60,6 @@ class CanadaListViewController: UITableViewController {
         cell.canadaEachRowData = canadaViewModel
         return cell
     }
-    
     //MARK:- Refresh Table Data
     @objc func refreshTableData(sender: UIRefreshControl)
     {

@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-
-//MARK:- Activity Indicator
+//MARK:- Show Activity Indicator
 let activityIndicator = UIActivityIndicatorView.init()
 public func showActivityIndicator() {
     if #available(iOS 13.0, *) {
@@ -30,7 +29,7 @@ public func showActivityIndicator() {
         activityIndicator.centerXAnchor.constraint(equalTo: topView!.centerXAnchor).isActive = true
     }
 }
-
+//MARK:- Hide Activity Indicator
 public func hideActivityIndicator() {
     DispatchQueue.main.async {
         activityIndicator.stopAnimating()
@@ -47,7 +46,6 @@ public class CustomAlert {
         UIWindow.key?.rootViewController!.present(alertController, animated: true, completion: nil)
     }
 }
-
 //MARK:- Check Network Reachbility
 public class Reachability {
     class func isConnectedToNetwork() -> Bool {
@@ -68,7 +66,6 @@ public class Reachability {
         return isReachable && !needsConnection
     }
 }
-
 //MARK:- NavigationController with Status bar style
 class CustomNavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {

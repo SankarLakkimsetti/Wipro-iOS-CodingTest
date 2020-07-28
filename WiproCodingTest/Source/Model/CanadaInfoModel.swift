@@ -8,17 +8,14 @@
 
 import Foundation
 
-struct CanadaDataModel : Decodable {
-    
-    let title : String
-    let rows : [Rows]?
-    
+//MARK:- Canada Response Model
+struct CanadaDataModel: Decodable {
+    let title: String?
+    let rows: [Rows]?
 }
-
-struct Rows : Decodable {
-    
-    let title : String?
-    let description : String?
-    let imageHref : String?
-    
+//MARK:- Row Data
+struct Rows: Decodable {
+    let title: String?
+    let description: String?
+    let imageHref: String?
 }

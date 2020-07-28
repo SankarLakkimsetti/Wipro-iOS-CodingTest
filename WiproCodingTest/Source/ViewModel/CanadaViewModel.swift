@@ -16,15 +16,15 @@ class CanadaViewModel {
             self.reloadDataCompletionBlock?()
         }
     }
-    
+    //MARK:- Fetch Canada Data
     func fetchCanadaData() {
         showActivityIndicator()
-        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json", type: CanadaDataModel.self, completionHandler: { (responseData) in
+        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: baseURL, type: CanadaDataModel.self, completionHandler: { (responseData) in
             self.canadaData = responseData as? CanadaDataModel
             hideActivityIndicator()
         }) { (errorObject) in
             if let errorMsg = errorObject  {
-                CustomAlert.showAlertViewWith(title: "Error", message: (errorMsg is String) ? (errorMsg as! String) : "Unable to fetch Data")
+                CustomAlert.showAlertViewWith(title: Alerts.title.rawValue, message: (errorMsg is String) ? (errorMsg as! String) : ServiceError.inValidResponse.rawValue)
             }
             hideActivityIndicator()
         }

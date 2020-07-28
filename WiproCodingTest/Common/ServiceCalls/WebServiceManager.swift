@@ -17,8 +17,11 @@ class WebServiceManager: NSObject {
     typealias resultCallBack = (_ data : AnyObject?)->Void
     typealias FailureHandler = (_ error:AnyObject?) -> Void
     func fetchCanadaDataFromUrl<T: Decodable>(urlString :  String ,type : T.Type,completionHandler :@escaping resultCallBack , failureHandler :@escaping (FailureHandler)) {
+        // Check network Connectivity
         if (!Reachability.isConnectedToNetwork()){
-            CustomAlert.showAlertViewWith(title: "No Network Connection", message: "Please check your internet connection and network settings and try again!!!")
+            CustomAlert.showAlertViewWith(title: Alerts.netwokTitle.rawValue, message: Alerts.netwokMessage.rawValue)
+            hideActivityIndicator()
+            return
         }
         let url = URL(string: urlString)!
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -35,10 +38,10 @@ class WebServiceManager: NSObject {
                         let decodedResponse = try JSONDecoder().decode(type.self, from: resultData!)
                         completionHandler(decodedResponse as AnyObject)
                     }catch  {
-                        failureHandler("Unable to decode data" as AnyObject)
+                        failureHandler(ServiceError.inValidParsing as AnyObject)
                     }
                 }else {
-                    failureHandler("Unable to fetch data" as AnyObject)
+                    failureHandler(ServiceError.inValidResponse as AnyObject)
                 }
             }
         }
