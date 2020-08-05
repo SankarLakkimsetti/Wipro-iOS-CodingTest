@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-//MARK:- Show Activity Indicator
-let activityIndicator = UIActivityIndicatorView.init()
+var activityIndicator = UIActivityIndicatorView.init()
+
+// MARK: - Show Activity Indicator
 public func showActivityIndicator() {
     if #available(iOS 13.0, *) {
         activityIndicator.style = .medium
@@ -29,14 +30,16 @@ public func showActivityIndicator() {
         activityIndicator.centerXAnchor.constraint(equalTo: topView!.centerXAnchor).isActive = true
     }
 }
-//MARK:- Hide Activity Indicator
+
+// MARK: - Hide Activity Indicator
 public func hideActivityIndicator() {
     DispatchQueue.main.async {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
 }
-//MARK:- Show Alert
+
+// MARK: - Show Alert
 public class CustomAlert {
     class func showAlertViewWith(title: String, message: String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -46,7 +49,8 @@ public class CustomAlert {
         UIWindow.key?.rootViewController!.present(alertController, animated: true, completion: nil)
     }
 }
-//MARK:- Check Network Reachbility
+
+// MARK: - Check Network Reachbility
 public class Reachability {
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
@@ -66,7 +70,8 @@ public class Reachability {
         return isReachable && !needsConnection
     }
 }
-//MARK:- NavigationController with Status bar style
+
+// MARK: - NavigationController with Status bar style
 class CustomNavigationController: UINavigationController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

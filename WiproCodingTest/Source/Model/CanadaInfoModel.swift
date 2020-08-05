@@ -8,12 +8,13 @@
 
 import Foundation
 
-//MARK:- Canada Response Model
+// MARK: - Canada Response Model
 struct CanadaDataModel: Decodable {
     let title: String?
     let rows: [Rows]?
 }
-//MARK:- Row Data
+
+// MARK: - Row Data
 struct Rows: Decodable {
     let title: String?
     let description: String?

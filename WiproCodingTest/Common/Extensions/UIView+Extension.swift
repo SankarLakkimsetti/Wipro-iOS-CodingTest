@@ -9,16 +9,20 @@
 import Foundation
 import UIKit
 
-//MARK:- Load Async Images 
+// MARK: - Load Async Images 
 let imageCache = NSCache<NSString, AnyObject>()
 extension UIImageView {
-    func loadImageUsingCache(withUrl urlString : String , placeHolder: UIImage!) {
-        let url = URL(string: urlString)
-        self.image = nil
-        self.image = placeHolder
+    
+    func loadImageUsingCacheWith(urlString : String? , placeHolder: UIImage?) {
+        if let imagePlaceholder = placeHolder {
+            self.image = imagePlaceholder
+        }
         // Check network connectivity
         if (!Reachability.isConnectedToNetwork() && !(UIWindow.key?.rootViewController?.presentedViewController is UIAlertController)){
             CustomAlert.showAlertViewWith(title: Alerts.netwokTitle.rawValue, message: Alerts.netwokMessage.rawValue)
+            return
+        }
+        guard let urlString = urlString, let url = URL(string: urlString) else {
             return
         }
         // Get image from cache if already exists
@@ -27,7 +31,8 @@ extension UIImageView {
             return
         }
         //download image from url
-        URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+        URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
+            
             if error != nil {
                 print(error!)
                 return
@@ -36,7 +41,7 @@ extension UIImageView {
                 if let image = UIImage(data: data!) {
                     //save Image in cache
                     imageCache.setObject(image, forKey: urlString as NSString)
-                    self.image = image
+                    self?.image = image
                 }
             }
         }).resume()

@@ -10,17 +10,21 @@ import Foundation
 import UIKit
 
 class CanadaViewModel {
-    var reloadDataCompletionBlock: (()->())?
-    var canadaData : CanadaDataModel?{
+    var reloadDataCompletionBlock: (()->())? = nil
+    var canadaData : CanadaDataModel? {
         didSet{
             self.reloadDataCompletionBlock?()
         }
     }
-    //MARK:- Fetch Canada Data
+    
+    // MARK: - Fetch Canada Data
     func fetchCanadaData() {
         showActivityIndicator()
-        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: baseURL, type: CanadaDataModel.self, completionHandler: { (responseData) in
-            self.canadaData = responseData as? CanadaDataModel
+        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { [weak self] (responseData) in
+            guard let dataSelf = self else {
+                return
+            }
+            dataSelf.canadaData = responseData as? CanadaDataModel
             hideActivityIndicator()
         }) { (errorObject) in
             if let errorMsg = errorObject  {

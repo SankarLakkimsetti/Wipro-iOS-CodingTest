@@ -16,6 +16,7 @@ class WebServiceManager: NSObject {
     }()
     typealias resultCallBack = (_ data : AnyObject?)->Void
     typealias FailureHandler = (_ error:AnyObject?) -> Void
+    
     func fetchCanadaDataFromUrl<T: Decodable>(urlString :  String ,type : T.Type,completionHandler :@escaping resultCallBack , failureHandler :@escaping (FailureHandler)) {
         // Check network Connectivity
         if (!Reachability.isConnectedToNetwork()){

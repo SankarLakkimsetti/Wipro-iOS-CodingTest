@@ -7,10 +7,11 @@
 //
 
 import XCTest
+
 @testable import WiproCodingTest
 
 class WiproCodingTestTests: XCTestCase {
-    var rootWindow: UIWindow!
+    var rootWindow: UIWindow?
     var canadaData: CanadaDataModel?
     var tableViewController :CanadaListViewController!
     override func setUp() {
@@ -26,21 +27,17 @@ class WiproCodingTestTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-    //MARK:- Test Canada Service Request Success or Not
+    
+    // MARK: - Test Canada Service Request Success or Not
     func testNetworkCallSuccessRequest() {
         let result = expectation(description: "Service Request is correct")
-        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: baseURL, type: CanadaDataModel.self, completionHandler: { (responseData) in
+        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { (responseData) in
             self.canadaData = responseData as? CanadaDataModel
             XCTAssertNotNil(self.canadaData, "Data as expected")
             result.fulfill()
@@ -51,7 +48,8 @@ class WiproCodingTestTests: XCTestCase {
             XCTAssertNil(error, "Time Out")
         }
     }
-    //MARK:- Test Canada Bad Service Request
+    
+    // MARK: - Test Canada Bad Service Request
     func testBadNetworkCallRequest() {
         let result = expectation(description: "Bad Service Request")
         WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: "//dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json", type: CanadaDataModel.self, completionHandler: { (responseData) in
@@ -65,11 +63,12 @@ class WiproCodingTestTests: XCTestCase {
             XCTAssertNil(error, "Time Out")
         }
     }
-    //MARK:- Test Canada TableView with Actual 6 records
+    
+    // MARK: - Test Canada TableView with Actual 6 records
     func testCanadaTableViewWithActualData() {
         var canadaRowsList = [Rows]()
         let result = expectation(description: "Canada data")
-        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: baseURL, type: CanadaDataModel.self, completionHandler: { (responseData) in
+        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { (responseData) in
             self.canadaData = responseData as? CanadaDataModel
             for index in 0...5 {
                 let eachRow = self.canadaData?.rows![index]
@@ -94,14 +93,16 @@ class WiproCodingTestTests: XCTestCase {
             XCTAssertNil(error, "Time Out")
         }
     }
-    //MARK:- Test Navigation Title Exists or Not
+    
+    // MARK: - Test Navigation Title Exists or Not
     func testNavigationTitleView() {
         XCTAssertNotNil(self.tableViewController.title)
     }
-    //MARK:- Test Canada TableView Navigation Title Matches or Not
+    
+    // MARK: - Test Canada TableView Navigation Title Matches or Not
     func testNavigationTitleValidation() {
         let result = expectation(description: "Navigation Title Exists")
-        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: baseURL, type: CanadaDataModel.self, completionHandler: { (responseData) in
+        WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { (responseData) in
             self.canadaData = responseData as? CanadaDataModel
             let titleString = (self.canadaData?.title != nil) ? self.canadaData?.title : ""
             DispatchQueue.main.async {
@@ -117,28 +118,33 @@ class WiproCodingTestTests: XCTestCase {
             XCTAssertNil(error, "Time Out")
         }
     }
-    //MARK:- Test Canada Row Model
+    
+    // MARK: - Test Canada Row Model
     func testCanadaRowsModel() {
         var canadaRowsList = [Rows]()
         let eachRow = Rows.init(title: "title1", description: "description1", imageHref: "imageUrl1")
         canadaRowsList.append(eachRow)
         XCTAssertEqual(canadaRowsList[0].title, eachRow.title)
     }
+    
     //MARK:- Test TableView
     func testHasATableView() {
         XCTAssertNotNil(self.tableViewController.tableView)
     }
+    
     func testTableViewHasDataSource() {
         XCTAssertNotNil(self.tableViewController.tableView.dataSource)
     }
+    
     func testTableViewCellHasReuseIdentifier() {
         self.tableViewController.canadaInfoList = [Rows.init(title: "title1", description: "description1", imageHref: "imageUrl1")]
         let cell = self.tableViewController.tableView(self.tableViewController.tableView, cellForRowAt: IndexPath(row: 0, section: 0)) as? CanadaListCell
         let actualReuseIdentifer = cell?.reuseIdentifier
-        let expectedReuseIdentifier = "canadaCellId"
+        let expectedReuseIdentifier = AppConstants.cellIdentifier
         XCTAssertEqual(actualReuseIdentifer, expectedReuseIdentifier)
     }
-    //MARK:- Test alertController
+    
+    // MARK: - Test alertController
     func testAlertController() {
         CustomAlert.showAlertViewWith(title: Alerts.title.rawValue, message: "Test Alert Controller")
         let expectation = XCTestExpectation(description: "Test Alert")
@@ -148,7 +154,8 @@ class WiproCodingTestTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 1.5)
     }
-    //MARK:- Test Activity Indicator
+    
+    // MARK: - Test Activity Indicator
     func testActivityIndicatorView() {
         showActivityIndicator()
         let expectation = XCTestExpectation(description: "Test Activity Indicator")
