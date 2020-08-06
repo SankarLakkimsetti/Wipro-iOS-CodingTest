@@ -1,5 +1,4 @@
 # @Wipro Coding Test - iOS
-Coding test submission to @ Wipro digital by Sankar Lakkimsetti.
 
 ## Coding Details:-
 1. Build a native iOS app to support both iPhone and iPad devices.
