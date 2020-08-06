@@ -11,8 +11,8 @@ import UIKit
 
 // MARK: - Load Async Images 
 let imageCache = NSCache<NSString, AnyObject>()
-
 extension UIImageView {
+    
     func loadImageUsingCacheWith(urlString : String? , placeHolder: UIImage?) {
         if let imagePlaceholder = placeHolder {
             self.image = imagePlaceholder
@@ -32,7 +32,6 @@ extension UIImageView {
         }
         //download image from url
         URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
-            
             if error != nil {
                 print(error!)
                 return

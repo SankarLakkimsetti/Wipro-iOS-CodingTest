@@ -44,7 +44,8 @@ public class ActivityIndicator {
 
 // MARK: - Show Alert
 public class CustomAlert {
-    class func showAlertViewWith(title: String, message: String){
+    
+    class func showAlertViewWith(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) { action in
         }
@@ -55,6 +56,7 @@ public class CustomAlert {
 
 // MARK: - Check Network Reachbility
 public class Reachability {
+    
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))

@@ -26,8 +26,8 @@ class CanadaListViewController: UITableViewController {
     
     // MARK: - Set up Navigation bar
     func setupNavigationBar() {
-        self.navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: AppFonts.helveticaNeueMedium, size: (UIDevice.current.userInterfaceIdiom == .pad) ? 30 : 18)!,.foregroundColor: UIColor.white]
-        self.navigationController!.navigationBar.barTintColor = AppColors.themeColor
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: AppFonts.helveticaNeueMedium, size: (UIDevice.current.userInterfaceIdiom == .pad) ? 30 : 18)!,.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.barTintColor = AppColors.themeColor
         self.title = AppConstants.canadaNavigationTitle
     }
     
@@ -46,7 +46,7 @@ class CanadaListViewController: UITableViewController {
     }
     
     // MARK: - Load Canada Data
-    fileprivate func loadCanadaData(){
+    fileprivate func loadCanadaData() {
         canadaViewModel?.fetchCanadaData()
         canadaViewModel?.reloadDataCompletionBlock = { [weak self] in
             if let rowsArray = self?.canadaViewModel?.canadaData?.rows {
@@ -54,17 +54,17 @@ class CanadaListViewController: UITableViewController {
             }
             DispatchQueue.main.async {
                 self?.title = (self?.canadaViewModel?.canadaData?.title != nil) ? self?.canadaViewModel?.canadaData?.title : AppConstants.canadaNavigationTitle
-                if ((self?.canadaInfoList?.count)! > 0){
-                    self?.tableView.reloadData()
-                }else {
+                guard let _ = self?.canadaInfoList?.count else {
                     self?.setNoDataAvailable()
+                    return
                 }
+                self?.tableView.reloadData()
             }
         }
     }
     
     // MARK: - Set No Data Available
-    func setNoDataAvailable(){
+    func setNoDataAvailable() {
         let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
         emptyLabel.text = AppConstants.noDataAvailable
         emptyLabel.textColor = AppColors.themeColor
@@ -84,15 +84,14 @@ class CanadaListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstants.cellIdentifier, for: indexPath) as! CanadaListCell
-        let canadaViewModel = canadaInfoList?[indexPath.row]
+        let canadaViewModel = self.canadaInfoList?[indexPath.row]
         cell.canadaEachRowData = canadaViewModel
         return cell
     }
     
     // MARK: - Refresh Table Data
-    @objc func refreshTableData(sender: UIRefreshControl)
-    {
-        loadCanadaData()
+    @objc func refreshTableData(sender: UIRefreshControl) {
+        self.loadCanadaData()
         sender.endRefreshing()
     }
     

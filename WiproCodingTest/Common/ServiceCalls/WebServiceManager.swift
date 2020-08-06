@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class WebServiceManager: NSObject {
+class WebServiceManager {
     static let sharedInstance: WebServiceManager = {
         let instance = WebServiceManager()
         return instance
