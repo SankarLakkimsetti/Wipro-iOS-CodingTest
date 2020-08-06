@@ -1,4 +1,4 @@
-# @Wipro Coding Test - iOS
+# @Wipro iOS Coding Test 
 
 ## Coding Details:-
 1. Build a native iOS app to support both iPhone and iPad devices.
