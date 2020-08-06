@@ -46,15 +46,30 @@ class CanadaListViewController: UITableViewController {
     fileprivate func loadCanadaData(){
         canadaViewModel.fetchCanadaData()
         canadaViewModel.reloadDataCompletionBlock = { [weak self] in
-            guard let dataSelf = self else {
-                return
+            guard let self = self else { return }
+            if let rowsArray = self.canadaViewModel.canadaData?.rows {
+                self.canadaInfoList = rowsArray
             }
-            dataSelf.canadaInfoList = (dataSelf.canadaViewModel.canadaData?.rows)!
             DispatchQueue.main.async {
-                dataSelf.title = (dataSelf.canadaViewModel.canadaData?.title != nil) ? dataSelf.canadaViewModel.canadaData?.title : AppConstants.canadaNavigationTitle
-                dataSelf.tableView.reloadData()
+                self.title = (self.canadaViewModel.canadaData?.title != nil) ? self.canadaViewModel.canadaData?.title : AppConstants.canadaNavigationTitle
+                if (self.canadaInfoList.count > 0){
+                    self.tableView.reloadData()
+                }else {
+                    self.setNoDataAvailable()
+                }
             }
         }
+    }
+    
+    // MARK: - Set No Data Available
+    func setNoDataAvailable(){
+        let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+        emptyLabel.text = AppConstants.noDataAvailable
+        emptyLabel.textColor = AppColors.themeColor
+        emptyLabel.font = UIFont(name: AppFonts.helveticaNeueMedium, size: (UIDevice.current.userInterfaceIdiom == .pad) ? 30 : 18)!
+        emptyLabel.textAlignment = NSTextAlignment.center
+        tableView.backgroundView = emptyLabel
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     // MARK: - UITableView Delegate And Datasource

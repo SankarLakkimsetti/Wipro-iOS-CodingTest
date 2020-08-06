@@ -19,18 +19,16 @@ class CanadaViewModel {
     
     // MARK: - Fetch Canada Data
     func fetchCanadaData() {
-        showActivityIndicator()
+        ActivityIndicator.showActivityIndicator()
         WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { [weak self] (responseData) in
-            guard let dataSelf = self else {
-                return
-            }
-            dataSelf.canadaData = responseData as? CanadaDataModel
-            hideActivityIndicator()
+            guard let self = self else { return }
+            self.canadaData = responseData as? CanadaDataModel
+            ActivityIndicator.hideActivityIndicator()
         }) { (errorObject) in
             if let errorMsg = errorObject  {
-                CustomAlert.showAlertViewWith(title: Alerts.title.rawValue, message: (errorMsg is String) ? (errorMsg as! String) : ServiceError.inValidResponse.rawValue)
+                CustomAlert.showAlertViewWith(title: Alerts.title, message: (errorMsg is String) ? (errorMsg as! String) : ServiceError.inValidResponse)
             }
-            hideActivityIndicator()
+            ActivityIndicator.hideActivityIndicator()
         }
     }
 }

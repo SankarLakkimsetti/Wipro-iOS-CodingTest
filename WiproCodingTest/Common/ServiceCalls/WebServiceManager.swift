@@ -20,8 +20,8 @@ class WebServiceManager: NSObject {
     func fetchCanadaDataFromUrl<T: Decodable>(urlString :  String ,type : T.Type,completionHandler :@escaping resultCallBack , failureHandler :@escaping (FailureHandler)) {
         // Check network Connectivity
         if (!Reachability.isConnectedToNetwork()){
-            CustomAlert.showAlertViewWith(title: Alerts.netwokTitle.rawValue, message: Alerts.netwokMessage.rawValue)
-            hideActivityIndicator()
+            CustomAlert.showAlertViewWith(title: Alerts.netwokTitle, message: Alerts.netwokMessage)
+            ActivityIndicator.hideActivityIndicator()
             return
         }
         let url = URL(string: urlString)!

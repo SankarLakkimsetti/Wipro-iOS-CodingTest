@@ -10,32 +10,35 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-var activityIndicator = UIActivityIndicatorView.init()
-
-// MARK: - Show Activity Indicator
-public func showActivityIndicator() {
-    if #available(iOS 13.0, *) {
-        activityIndicator.style = .medium
-    } else {
-        activityIndicator.style = .gray
+// MARK: -  Activity Indicator
+public class ActivityIndicator {
+    static var activityIndicator = UIActivityIndicatorView.init()
+    
+    // MARK: - Show Activity Indicator
+    class func showActivityIndicator() {
+        if #available(iOS 13.0, *) {
+            activityIndicator.style = .medium
+        } else {
+            activityIndicator.style = .gray
+        }
+        activityIndicator.color = .darkGray
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.startAnimating()
+        activityIndicator.hidesWhenStopped = true
+        let topView = UIWindow.key?.rootViewController!.view
+        DispatchQueue.main.async {
+            topView!.addSubview(activityIndicator)
+            activityIndicator.centerYAnchor.constraint(equalTo:topView!.centerYAnchor ).isActive = true
+            activityIndicator.centerXAnchor.constraint(equalTo: topView!.centerXAnchor).isActive = true
+        }
     }
-    activityIndicator.color = .darkGray
-    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-    activityIndicator.startAnimating()
-    activityIndicator.hidesWhenStopped = true
-    let topView = UIWindow.key?.rootViewController!.view
-    DispatchQueue.main.async {
-        topView!.addSubview(activityIndicator)
-        activityIndicator.centerYAnchor.constraint(equalTo:topView!.centerYAnchor ).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: topView!.centerXAnchor).isActive = true
-    }
-}
-
-// MARK: - Hide Activity Indicator
-public func hideActivityIndicator() {
-    DispatchQueue.main.async {
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
+    
+    // MARK: - Hide Activity Indicator
+    class func hideActivityIndicator() {
+        DispatchQueue.main.async {
+            activityIndicator.stopAnimating()
+            activityIndicator.removeFromSuperview()
+        }
     }
 }
 

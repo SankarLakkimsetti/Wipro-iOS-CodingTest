@@ -19,7 +19,7 @@ extension UIImageView {
         }
         // Check network connectivity
         if (!Reachability.isConnectedToNetwork() && !(UIWindow.key?.rootViewController?.presentedViewController is UIAlertController)){
-            CustomAlert.showAlertViewWith(title: Alerts.netwokTitle.rawValue, message: Alerts.netwokMessage.rawValue)
+            CustomAlert.showAlertViewWith(title: Alerts.netwokTitle, message: Alerts.netwokMessage)
             return
         }
         guard let urlString = urlString, let url = URL(string: urlString) else {
@@ -33,6 +33,7 @@ extension UIImageView {
         //download image from url
         URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
             
+            guard let self = self else { return }
             if error != nil {
                 print(error!)
                 return
@@ -41,7 +42,7 @@ extension UIImageView {
                 if let image = UIImage(data: data!) {
                     //save Image in cache
                     imageCache.setObject(image, forKey: urlString as NSString)
-                    self?.image = image
+                    self.image = image
                 }
             }
         }).resume()

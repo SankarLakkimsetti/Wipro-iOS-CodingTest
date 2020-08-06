@@ -20,20 +20,21 @@ struct AppConstants {
     static let canadaNavigationTitle = "About Canada"
     static let canadaDefaultTitle = "No Title"
     static let canadaDefaultDescription = "No Description"
+    static let noDataAvailable = "No Data Available"
     static let placeholderImage = UIImage.init(named: "placeholder")
 }
 
 // MARK: - Serice Errors Messages
-enum ServiceError: String, Error{
-    case inValidParsing = "Unable to decode data."
-    case inValidResponse = "Unable to fetch data."
+struct ServiceError {
+    static let inValidParsing = "Unable to decode data."
+    static let inValidResponse = "Unable to fetch data."
 }
 
 // MARK: - Alerts Title and Messages
-enum Alerts: String {
-    case netwokTitle = "No Network Connection"
-    case netwokMessage = "Please check your internet connection and network settings and try again!!!"
-    case title = "Alert"
+struct Alerts {
+    static let netwokTitle = "No Network Connection"
+    static let netwokMessage = "Please check your internet connection and network settings and try again!!!"
+    static let title = "Alert"
 }
 
 // MARK: - App Theme Color

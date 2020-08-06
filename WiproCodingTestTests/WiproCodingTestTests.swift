@@ -11,9 +11,11 @@ import XCTest
 @testable import WiproCodingTest
 
 class WiproCodingTestTests: XCTestCase {
+    
     var rootWindow: UIWindow?
     var canadaData: CanadaDataModel?
     var tableViewController :CanadaListViewController!
+    
     override func setUp() {
         rootWindow = UIWindow(frame: UIScreen.main.bounds)
         tableViewController = CanadaListViewController()
@@ -127,6 +129,24 @@ class WiproCodingTestTests: XCTestCase {
         XCTAssertEqual(canadaRowsList[0].title, eachRow.title)
     }
     
+    // MARK: - Test Positive Canada Model
+    func testPositiveCanadaModel() {
+        let eachRow = Rows.init(title: "title1", description: "description1", imageHref: "imageUrl1")
+        let canadaModel = CanadaDataModel(title: AppConstants.canadaNavigationTitle, rows: [eachRow])
+        XCTAssertEqual(canadaModel.title, "About Canada")
+        XCTAssertEqual(canadaModel.rows![0].title, "title1")
+        XCTAssertEqual(canadaModel.rows![0].description, "description1")
+    }
+    
+    // MARK: - Test Negative Canada Model
+    func testNegativeCanadaModel() {
+        let eachRow = Rows.init(title: nil, description: nil, imageHref: nil)
+        let canadaModel = CanadaDataModel(title: nil, rows: [eachRow])
+        XCTAssertNotEqual(canadaModel.title, "About Canada")
+        XCTAssertNotEqual(canadaModel.rows![0].title, "title1")
+        XCTAssertNotEqual(canadaModel.rows![0].description, "title1")
+    }
+    
     //MARK:- Test TableView
     func testHasATableView() {
         XCTAssertNotNil(self.tableViewController.tableView)
@@ -146,7 +166,7 @@ class WiproCodingTestTests: XCTestCase {
     
     // MARK: - Test alertController
     func testAlertController() {
-        CustomAlert.showAlertViewWith(title: Alerts.title.rawValue, message: "Test Alert Controller")
+        CustomAlert.showAlertViewWith(title: Alerts.title, message: "Test Alert Controller")
         let expectation = XCTestExpectation(description: "Test Alert")
         DispatchQueue.main.async {
             XCTAssertTrue(UIWindow.key?.rootViewController?.presentedViewController is UIAlertController)
@@ -157,7 +177,7 @@ class WiproCodingTestTests: XCTestCase {
     
     // MARK: - Test Activity Indicator
     func testActivityIndicatorView() {
-        showActivityIndicator()
+        ActivityIndicator.showActivityIndicator()
         let expectation = XCTestExpectation(description: "Test Activity Indicator")
         DispatchQueue.main.async {
             let topView = UIWindow.key?.rootViewController?.view
