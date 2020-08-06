@@ -9,9 +9,12 @@
 import UIKit
 
 class CanadaListViewController: UITableViewController {
-    
-    lazy var canadaInfoList = [Rows]()
-    var canadaViewModel = CanadaViewModel()
+    lazy var canadaInfoList: [Rows?]? = {
+        return [Rows?]()
+    }()
+    lazy var canadaViewModel: CanadaViewModel? = {
+        return CanadaViewModel()
+    }()
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -44,18 +47,17 @@ class CanadaListViewController: UITableViewController {
     
     // MARK: - Load Canada Data
     fileprivate func loadCanadaData(){
-        canadaViewModel.fetchCanadaData()
-        canadaViewModel.reloadDataCompletionBlock = { [weak self] in
-            guard let self = self else { return }
-            if let rowsArray = self.canadaViewModel.canadaData?.rows {
-                self.canadaInfoList = rowsArray
+        canadaViewModel?.fetchCanadaData()
+        canadaViewModel?.reloadDataCompletionBlock = { [weak self] in
+            if let rowsArray = self?.canadaViewModel?.canadaData?.rows {
+                self?.canadaInfoList = rowsArray.map { $0 }
             }
             DispatchQueue.main.async {
-                self.title = (self.canadaViewModel.canadaData?.title != nil) ? self.canadaViewModel.canadaData?.title : AppConstants.canadaNavigationTitle
-                if (self.canadaInfoList.count > 0){
-                    self.tableView.reloadData()
+                self?.title = (self?.canadaViewModel?.canadaData?.title != nil) ? self?.canadaViewModel?.canadaData?.title : AppConstants.canadaNavigationTitle
+                if ((self?.canadaInfoList?.count)! > 0){
+                    self?.tableView.reloadData()
                 }else {
-                    self.setNoDataAvailable()
+                    self?.setNoDataAvailable()
                 }
             }
         }
@@ -74,12 +76,15 @@ class CanadaListViewController: UITableViewController {
     
     // MARK: - UITableView Delegate And Datasource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (canadaInfoList.count)
+        guard let count = self.canadaInfoList?.count else {
+            return 0
+        }
+        return count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppConstants.cellIdentifier, for: indexPath) as! CanadaListCell
-        let canadaViewModel = canadaInfoList[indexPath.row]
+        let canadaViewModel = canadaInfoList?[indexPath.row]
         cell.canadaEachRowData = canadaViewModel
         return cell
     }

@@ -21,8 +21,7 @@ class CanadaViewModel {
     func fetchCanadaData() {
         ActivityIndicator.showActivityIndicator()
         WebServiceManager.sharedInstance.fetchCanadaDataFromUrl(urlString: AppUrls.baseUrl, type: CanadaDataModel.self, completionHandler: { [weak self] (responseData) in
-            guard let self = self else { return }
-            self.canadaData = responseData as? CanadaDataModel
+            self?.canadaData = responseData as? CanadaDataModel
             ActivityIndicator.hideActivityIndicator()
         }) { (errorObject) in
             if let errorMsg = errorObject  {

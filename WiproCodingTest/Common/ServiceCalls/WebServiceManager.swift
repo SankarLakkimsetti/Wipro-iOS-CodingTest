@@ -17,14 +17,16 @@ class WebServiceManager: NSObject {
     typealias resultCallBack = (_ data : AnyObject?)->Void
     typealias FailureHandler = (_ error:AnyObject?) -> Void
     
-    func fetchCanadaDataFromUrl<T: Decodable>(urlString :  String ,type : T.Type,completionHandler :@escaping resultCallBack , failureHandler :@escaping (FailureHandler)) {
+    func fetchCanadaDataFromUrl<T: Decodable>(urlString :  String? ,type : T.Type,completionHandler :@escaping resultCallBack , failureHandler :@escaping (FailureHandler)) {
         // Check network Connectivity
         if (!Reachability.isConnectedToNetwork()){
             CustomAlert.showAlertViewWith(title: Alerts.netwokTitle, message: Alerts.netwokMessage)
             ActivityIndicator.hideActivityIndicator()
             return
         }
-        let url = URL(string: urlString)!
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            return
+        }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let error = error {
                 failureHandler(error as AnyObject)

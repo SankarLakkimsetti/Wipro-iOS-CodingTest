@@ -11,7 +11,6 @@ import XCTest
 @testable import WiproCodingTest
 
 class WiproCodingTestTests: XCTestCase {
-    
     var rootWindow: UIWindow?
     var canadaData: CanadaDataModel?
     var tableViewController :CanadaListViewController!

@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 class CanadaListCell: UITableViewCell {
-    
     //Initilisation of titleLabel with properties
     lazy var titleLabel: UILabel = {
         let label = UILabel()
